@@ -7,7 +7,6 @@ import time
 import json 
 
 
-
 # Opening JSON file 
 f = 'route_conv.json'
 
@@ -40,7 +39,7 @@ with open(f) as json_file:
 
         # temperature random
         temperature = random.uniform(0, 30.5)
-        print("Random float number is ", temperature)
+        print("temperature : %2.2f" % temperature)
         #print("Random float number is ", random.random())
 
         # shell command
