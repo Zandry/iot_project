@@ -1,3 +1,12 @@
+# --------------------------------------------------------------- #
+# --------- the purpose of this program is to create    --------- #
+# --------- random values ​​to simulate the temperature   --------- #
+# --------- and to read the geolocation data.           --------- #
+# --------- And allows to send them to the IoT cockpit  --------- #
+# --------------------------------------------------------------- #
+# --------------------------------------------------------------- #
+# --- Author: Arnauld ANDRIANIAINA | Creation date: 16/06/2020 -- #
+# --------------------------------------------------------------- #
 from datetime import datetime
 import random
 import sys
