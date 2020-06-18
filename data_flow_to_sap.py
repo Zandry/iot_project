@@ -14,12 +14,25 @@ import math
 import os
 import time
 import json 
+import xmltodict
 
+# -------------------------------------------------------- #
+# ---------------- convert xml file to json ---------------#
+# -------------------------------------------------------- #
 
-# Opening JSON file 
-f = 'route_conv.json'
+with open('route.gpx') as xml_file:
+    my_dict=xmltodict.parse(xml_file.read())
+xml_file.close()
+json_data=json.dumps(my_dict)
+#print(json_data)
+print("convert success")
+print("##### send data to IoT cockpit #####")
 
-i=0
+# output file
+out_file = open("route_conv.json", "w") 
+json.dump(my_dict, out_file, indent = 4) 
+out_file.close() 
+
 
 # -------------------------------------------------------- #
 # --------- send data flow temperature, long/lat ----------#
@@ -27,7 +40,12 @@ i=0
 # -------------------------------------------------------- #
 # ---------------- read json file geocoding ---------------#
 # -------------------------------------------------------- #
-    
+
+# Opening JSON file 
+f = 'route_conv.json'
+
+i=0    
+
 with open(f) as json_file:
     data = json.load(json_file)
     for p in data['gpx']['trk']['trkseg']['trkpt']:
@@ -47,7 +65,7 @@ with open(f) as json_file:
         print("temperature : %2.2f" % temperature)
         #print("Random float number is ", random.random())
 
-        # shell command
+        # shell command  publish data to the broker 
         os.system("mosquitto_pub -h localhost -t 'iot/data/iotmmsa0e6fe04b/v1/96a4e75e-db6c-4b0a-a79f-bb8605e35436' -m '{\"mode\":\"async\",\"messageType\":\"6acdf37c3cbcd43aa0ea\",\"messages\":[{\"timestamp\": %d ,\"temperature\":%d, \"longitude\":%2f, \"latitude\":%3f}]}'" % (timestamp, temperature, longitude, latitude))
         time.sleep(2)
 
